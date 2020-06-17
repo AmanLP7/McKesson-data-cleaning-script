@@ -270,7 +270,7 @@ class clean_workbook_data():
                 finalData[f"{sheetName[:15]}_filtered"] = dfFiltered
                 finalData[f"{sheetName[:15]}_exception"] = dfException
 
-                for data, name in [(dfFiltered, "Filtered"), (dfException, "Exception")]:
+                for data, name in [(dfFiltered, "Filtered")]:
 
                     newData = pd.DataFrame()
                     data_dict = dict.fromkeys(headerMapping,0)
@@ -298,7 +298,7 @@ class clean_workbook_data():
 
                                 newData[key] = np.nan
 
-                    finalData[f"{sheetName[:10]}_{name}_top5"] = newData.iloc[:5,:]
+                    finalData[f"{sheetName[:10]}_{name}_full"] = newData
 
                 return finalData
 
@@ -332,7 +332,7 @@ class clean_workbook_data():
                             newData[key] = np.nan
 
                 finalData[f"{sheetName[:10]}_SortedByDate"] = df
-                finalData[f"{sheetName[:10]}_SortedByDateTop5"] = newData.iloc[:5,:]
+                finalData[f"{sheetName[:10]}_SortedByDatefull"] = newData
 
                 return finalData
 
@@ -412,11 +412,11 @@ will be used to write the cleaned data.
 # Uncomment this to input filename on terminal
 # dataFileName = str(input("Enter the input file name:\n"))
 
-dataFileName = "Sample 1.xlsx"
+dataFileName = str(input("Enter the file name: "))
 
 try:
 
-    sampleData = file.importFile(dataFileName)
+    sampleData = file.importFile(dataFileName + ".xlsx")
 
 except:
 
@@ -432,7 +432,7 @@ except:
 # Uncomment this to input filename on terminal
 # outputFile = str(input("Enter the output file name:\n"))
 
-outputFile = "Sample-1-output.xlsx"
+outputFile = f"{dataFileName} output.xlsx"
 file.writeDictToExcel(sampleData, outputFile)
 
 
